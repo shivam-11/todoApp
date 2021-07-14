@@ -9,8 +9,11 @@ import {Button2} from "./MyComponent/Button2";
 import {Button3} from "./MyComponent/Button3";  
 import {TaskHead} from "./MyComponent/TaskHead";
 import {Task} from "./MyComponent/Task";
+import Modal from 'react-modal';
+import {Button} from "antd";
 import {useSelector, useDispatch} from "react-redux";
 import React ,{ Component } from 'react';
+import { modalGlobalConfig } from 'antd/lib/modal/confirm';
 
 
 
@@ -24,9 +27,6 @@ class App extends Component{
           <CacheBuster>
             {({loading, isLatestVersion, refreshCacheAndReload }) => {
               if (loading) return null;
-              if (!loading && !isLatestVersion) {
-              refreshCacheAndReload();
-            }
 
         return(
           <>          
@@ -34,8 +34,16 @@ class App extends Component{
             <InputTask/>
             <Button1/>
             <Button2/>
-            <Button3/>  
-      
+            <Button3/> 
+            <Modal className = "relative p-8 bg-gray-100 border-gray-200 max-w-md m-auto flex-col " isOpen = {!loading && !isLatestVersion} >         
+              <h1 className = "text-3xl font-bold">Refresh Page</h1>
+
+              <h3 className = "text-1xl text-gray-500 ">You Should refresh the page Otherwise it may cause issue ?? After refresh you can continue your work!!</h3>
+              <div>
+                <Button className = "border-2 bg-blue-400 py-1 px-5 mx-20 align-left hover:border-gray-500" onClick = {refreshCacheAndReload}>Refresh</Button>
+              </div>  
+            </Modal> 
+                 
             <div >
       
             {mystate.value === 0 && <TaskHead TH = {{ length: mystate.activetask.length, desc:"Active Task"}}/>}
