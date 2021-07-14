@@ -27,6 +27,7 @@ class App extends Component{
           <CacheBuster>
             {({loading, isLatestVersion, refreshCacheAndReload }) => {
               if (loading) return null;
+              
 
         return(
           <>          
@@ -35,7 +36,7 @@ class App extends Component{
             <Button1/>
             <Button2/>
             <Button3/> 
-            <Modal className = "relative p-8 bg-gray-100 border-gray-200 max-w-md m-auto flex-col " isOpen = {!loading && !isLatestVersion} >         
+            <Modal className = "relative p-8 bg-gray-100 border-gray-200 max-w-md m-auto flex-col " isOpen = {!isLatestVersion && !loading} >         
               <h1 className = "text-3xl font-bold">Refresh Page</h1>
 
               <h3 className = "text-1xl text-gray-500 ">You Should refresh the page Otherwise it may cause issue ?? After refresh you can continue your work!!</h3>
