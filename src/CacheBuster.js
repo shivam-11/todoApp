@@ -41,6 +41,14 @@ class CacheBuster extends React.Component {
   }
 
   componentDidMount() {
+    this.checkVersion();
+    this.interval = setInterval(() => {
+      this.checkVersion();
+    }, 5000);
+    
+  }
+  
+  checkVersion() {
     fetch('/meta.json')
       .then((response) => response.json())
       .then((meta) => {
@@ -55,8 +63,13 @@ class CacheBuster extends React.Component {
           console.log(`You already have the latest version - ${latestVersion}. No cache refresh needed.`);
           this.setState({ loading: false, isLatestVersion: true });
         }
-      });
-  }
+      });  
+  }  
+  
+  componentWillUnmount() {
+   clearInterval(this.interval);
+ }
+  
   render() {
     const { loading, isLatestVersion, refreshCacheAndReload } = this.state;
     return this.props.children({ loading, isLatestVersion, refreshCacheAndReload });
